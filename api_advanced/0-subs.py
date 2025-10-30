@@ -1,39 +1,41 @@
 #!/usr/bin/python3
 """
-Module for querying Reddit API to get number of subscribers for a subreddit.
+Module to query Reddit API for top 10 hot posts
 """
 import requests
 
 
-def number_of_subscribers(subreddit):
+def top_ten(subreddit):
     """
-    Query the Reddit API and return the number of subscribers.
-
+    Queries the Reddit API and prints the titles of the first 10 hot posts
+    for a given subreddit.
+    
     Args:
-        subreddit (str): The name of the subreddit
-
+        subreddit: The name of the subreddit to query
+        
     Returns:
-        int: Number of subscribers, or 0 if invalid subreddit
+        None - prints titles or None if invalid subreddit
     """
-    if not subreddit or not isinstance(subreddit, str):
-        return 0
-
-    url = f"https://www.reddit.com/r/{subreddit}/about.json"
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {
-        'User-Agent': 'MyRedditScript/1.0 (by /u/YourUsername)'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
     }
-
+    params = {'limit': 10}
+    
     try:
-        response = requests.get(
-            url,
-            headers=headers,
-            allow_redirects=False,
-            timeout=10
-        )
-
+        response = requests.get(url, headers=headers, params=params,
+                              allow_redirects=False)
+        
         if response.status_code == 200:
             data = response.json()
-            return data.get('data', {}).get('subscribers', 0)
-        return 0
+            posts = data.get('data', {}).get('children', [])
+            
+            for post in posts:
+                title = post.get('data', {}).get('title')
+                if title:
+                    print(title)
+        else:
+            print(None)
+            
     except Exception:
-        return 0
+        print(None)
