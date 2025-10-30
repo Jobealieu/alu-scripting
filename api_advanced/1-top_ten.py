@@ -20,7 +20,7 @@ def top_ten(subreddit):
 
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {
-        'User-Agent': 'python:subreddit.posts:v1.0'
+        'User-Agent': 'Mozilla/5.0'
     }
     params = {'limit': 10}
 
@@ -34,16 +34,21 @@ def top_ten(subreddit):
 
         if response.status_code == 200:
             data = response.json()
-            children = data.get('data', {}).get('children', [])
-
-            if not children:
+            
+            # Check if we have valid data structure
+            if 'data' not in data or 'children' not in data.get('data', {}):
+                print(None)
+                return
+            
+            children = data['data']['children']
+            
+            if len(children) == 0:
                 print(None)
                 return
 
             for child in children:
-                title = child.get('data', {}).get('title')
-                if title:
-                    print(title)
+                if 'data' in child and 'title' in child['data']:
+                    print(child['data']['title'])
         else:
             print(None)
 
