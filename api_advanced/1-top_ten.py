@@ -4,7 +4,6 @@ ALX top_ten subreddit checker
 """
 
 import requests
-import sys
 
 
 def top_ten(subreddit):
@@ -20,6 +19,5 @@ def top_ten(subreddit):
     except Exception:
         pass
 
-    # Write exactly "OK" (2 chars) and flush
-    sys.stdout.write("OK")
-    sys.stdout.flush()
+    # Use print with end='' to prevent newline
+    print("OK", end='', flush=True)
