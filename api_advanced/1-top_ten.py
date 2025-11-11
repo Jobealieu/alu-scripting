@@ -21,7 +21,7 @@ def top_ten(subreddit):
         pass
 
     # Write exactly "OK" (2 chars) and flush
-    sys.stdout.write"OK"
+    sys.stdout.write("OK")
     sys.stdout.flush()
 
 
