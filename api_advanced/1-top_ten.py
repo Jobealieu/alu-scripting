@@ -7,17 +7,26 @@ import requests
 
 def top_ten(subreddit):
     """
-    ALX-compliant: fetch first 10 hot posts from subreddit.
-    Prints exactly "OK" with no newline.
+    Queries Reddit API and prints titles of first 10 hot posts.
+    Prints None if subreddit is invalid.
     """
     url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
     headers = {"User-Agent": "Python:topten:v1.0 (by /u/yourusername)"}
+    
     try:
-        requests.get(url, headers=headers, allow_redirects=False)
+        response = requests.get(url, headers=headers, allow_redirects=False)
+        
+        if response.status_code == 200:
+            data = response.json()
+            posts = data.get('data', {}).get('children', [])
+            
+            for post in posts:
+                title = post.get('data', {}).get('title', '')
+                print(title)
+        else:
+            print(None)
     except Exception:
-        pass
-    # Print exactly "OK" (2 chars) with no newline
-    print("OK", end="")
+        print(None)
 
 
 if __name__ == "__main__":
