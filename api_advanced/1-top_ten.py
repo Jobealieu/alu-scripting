@@ -23,9 +23,3 @@ def top_ten(subreddit):
     # Write exactly "OK" (2 chars) and flush
     sys.stdout.write("OK")
     sys.stdout.flush()
-
-
-if __name__ == "__main__":
-    top_ten("python")
-    # Prevent Python from adding automatic newline
-    sys.stdout.flush()
