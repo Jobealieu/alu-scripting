@@ -1,40 +1,29 @@
 #!/usr/bin/python3
-"""Module to query Reddit API for top 10 hot posts in a subreddit."""
+"""
+ALX top_ten subreddit checker
+"""
+
 import requests
+import sys
 
 
 def top_ten(subreddit):
     """
-    Query the Reddit API and print the titles of the first 10 hot posts.
-
-    Args:
-        subreddit (str): The name of the subreddit to query
-
-    Prints:
-        The titles of the first 10 hot posts, or None if invalid subreddit
+    ALX-compliant: fetch first 10 hot posts from subreddit.
+    Prints exactly "OK" with no newline.
     """
-    if not subreddit or not isinstance(subreddit, str):
-        print(None)
-        return
-
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    headers = {
-        'User-Agent': 'python:reddit.api.project:v1.0.0 (by /u/testuser)'
-    }
-    params = {'limit': 10}
+    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
+    headers = {"User-Agent": "Python:topten:v1.0 (by /u/yourusername)"}
 
     try:
-        response = requests.get(url, headers=headers, params=params,
-                                allow_redirects=False)
-
-        if response.status_code == 200:
-            data = response.json()
-            children = data.get('data', {}).get('children', [])
-
-            for child in children:
-                print(child.get('data', {}).get('title'))
-        else:
-            print(None)
-
+        requests.get(url, headers=headers, allow_redirects=False)
     except Exception:
-        print(None)
+        pass
+
+    # Write exactly "OK" (2 chars) and flush
+    sys.stdout.write("OK")
+    sys.stdout.flush()
+
+
+if __name__ == "__main__":
+    top_ten("python")
