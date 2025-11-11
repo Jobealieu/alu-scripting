@@ -27,3 +27,5 @@ def top_ten(subreddit):
 
 if __name__ == "__main__":
     top_ten("python")
+    # Prevent Python from adding automatic newline
+    sys.stdout.flush()
