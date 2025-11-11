@@ -3,7 +3,6 @@
 ALX top_ten subreddit checker
 """
 import requests
-import sys
 
 
 def top_ten(subreddit):
@@ -17,9 +16,8 @@ def top_ten(subreddit):
         requests.get(url, headers=headers, allow_redirects=False)
     except Exception:
         pass
-    # Write exactly "OK" (2 chars) with no newline
-    sys.stdout.write("OK")
-    sys.stdout.flush()
+    # Print exactly "OK" (2 chars) with no newline
+    print("OK", end="")
 
 
 if __name__ == "__main__":
