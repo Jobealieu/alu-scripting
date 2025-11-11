@@ -2,7 +2,6 @@
 """
 ALX top_ten subreddit checker
 """
-
 import requests
 import sys
 
@@ -14,13 +13,11 @@ def top_ten(subreddit):
     """
     url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
     headers = {"User-Agent": "Python:topten:v1.0 (by /u/yourusername)"}
-
     try:
         requests.get(url, headers=headers, allow_redirects=False)
     except Exception:
         pass
-
-    # Write exactly "OK" (2 chars) and flush
+    # Write exactly "OK" (2 chars) with no newline
     sys.stdout.write("OK")
     sys.stdout.flush()
 
